@@ -197,7 +197,7 @@ export default function App() {
     try {
       await loadRazorpay();
 
-      const { data } = await axios.post("http://localhost:5000/create-order", {
+      const { data } = await axios.post(   'https://tip-jar-backend.onrender.com/create-order'{
         amount,
       });
 
@@ -251,7 +251,7 @@ export default function App() {
 
         handler: async (response) => {
           const result = await axios.post(
-            "http://localhost:5000/verify-payment",
+           'https://tip-jar-backend.onrender.com/verify-payment',
             response,
           );
           if (result.data.success) {
@@ -312,7 +312,7 @@ export default function App() {
           {QUICK_AMOUNTS.map((q) => (
             <button
               key={q}
-              style={amount == q ? styles.chipActive : styles.chip}
+              style={Number(amount) === q ? styles.chipActive : styles.chip}
               onClick={() => setAmount(q)}
             >
               ₹{q}
