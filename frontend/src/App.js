@@ -300,7 +300,9 @@ function TipJar() {
             Refund Policy
           </a>
         </div>
-        <p style={{ margin: 0 }}>© 2026 Tip Jar · Contact: shivam@email.com</p>
+        <p style={{ margin: 0 }}>
+          © 2026 Tip Jar · Contact: shivamtiwaricr7@gmail.com
+        </p>
       </div>
     </div>
   );
