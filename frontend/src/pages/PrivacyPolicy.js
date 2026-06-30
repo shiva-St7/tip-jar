@@ -82,7 +82,7 @@ export default function PrivacyPolicy() {
         <h2 style={h2}>5. Contact Us</h2>
         <p style={p}>
           If you have any questions about this Privacy Policy, please contact us
-          at: shivam@email.com
+          at: shivamtiwaricr7@gmail.com
         </p>
       </div>
     </div>

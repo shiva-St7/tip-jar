@@ -65,9 +65,9 @@ export default function Refund() {
 
         <h2 style={h2}>3. How to Request a Refund</h2>
         <p style={p}>
-          To request a refund, contact us at shivam@email.com within 7 days of
-          the transaction with your payment ID and reason for refund. We will
-          respond within 3-5 business days.
+          To request a refund, contact us at shivamtiwaricr7@gmail.com within 7
+          days of the transaction with your payment ID and reason for refund. We
+          will respond within 3-5 business days.
         </p>
 
         <h2 style={h2}>4. Refund Process</h2>
@@ -81,7 +81,7 @@ export default function Refund() {
         <p style={p}>
           Once a payment is initiated and completed, it cannot be cancelled. If
           you accidentally made a payment, please contact us immediately at
-          shivam@email.com
+          shivamtiwaricr7@gmail.com
         </p>
       </div>
     </div>

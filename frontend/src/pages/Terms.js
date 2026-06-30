@@ -91,7 +91,8 @@ export default function Terms() {
 
         <h2 style={h2}>7. Contact</h2>
         <p style={p}>
-          For any queries regarding these terms, contact us at: shivam@email.com
+          For any queries regarding these terms, contact us at:
+          shivamtiwaricr7@gmail.com
         </p>
       </div>
     </div>
