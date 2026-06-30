@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Terms from "./pages/Terms";
+import Refund from "./pages/Refund";
 
 const styles = {
   page: {
     minHeight: "100vh",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
@@ -105,6 +110,23 @@ const styles = {
     cursor: "not-allowed",
   },
   secureNote: { marginTop: "20px", fontSize: "13px", color: "#aaa" },
+  footer: {
+    marginTop: "32px",
+    textAlign: "center",
+    color: "rgba(255,255,255,0.8)",
+    fontSize: "13px",
+  },
+  footerLinks: {
+    display: "flex",
+    gap: "16px",
+    justifyContent: "center",
+    marginBottom: "8px",
+  },
+  footerLink: {
+    color: "rgba(255,255,255,0.9)",
+    textDecoration: "none",
+    fontSize: "13px",
+  },
   successPage: {
     minHeight: "100vh",
     background: "linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)",
@@ -149,7 +171,7 @@ const styles = {
 
 const QUICK_AMOUNTS = [49, 99, 199];
 
-export default function App() {
+function TipJar() {
   const [amount, setAmount] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -264,6 +286,33 @@ export default function App() {
         </button>
         <p style={styles.secureNote}>🔒 Secured by Razorpay · 100% safe</p>
       </div>
+
+      {/* Footer */}
+      <div style={styles.footer}>
+        <div style={styles.footerLinks}>
+          <a href="/privacy-policy" style={styles.footerLink}>
+            Privacy Policy
+          </a>
+          <a href="/terms" style={styles.footerLink}>
+            Terms & Conditions
+          </a>
+          <a href="/refund" style={styles.footerLink}>
+            Refund Policy
+          </a>
+        </div>
+        <p style={{ margin: 0 }}>© 2026 Tip Jar · Contact: shivam@email.com</p>
+      </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<TipJar />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/refund" element={<Refund />} />
+    </Routes>
   );
 }
