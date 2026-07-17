@@ -4,8 +4,8 @@ const crypto = require("crypto");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const knowledge = require("./knowledge");
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+// const knowledge = require("./knowledge");
 
 require("dotenv").config();
 
@@ -75,8 +75,6 @@ app.post("/verify-payment", (req, res) => {
 });
 
 // RAG Chatbot route
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
 app.post("/chat", async (req, res) => {
   try {
     const { question } = req.body;
@@ -85,20 +83,37 @@ app.post("/chat", async (req, res) => {
       return res.status(400).json({ error: "Question is required" });
     }
 
-    const prompt = `
-You are a helpful assistant for Tip Jar.
-Answer ONLY based on this knowledge base:
+    const prompt = `You are a helpful assistant for Tip Jar, a creator tipping platform.
+Answer the user's question based ONLY on the information provided below.
+If the answer is not in the provided information, say "I don't have that information, please contact shivam@email.com"
+Keep answers friendly, short and helpful.
 
+KNOWLEDGE BASE:
 ${knowledge}
 
 USER QUESTION: ${question}
-ANSWER:
-    `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const result = await model.generateContent(prompt);
-    const answer = result.response.text();
+ANSWER:`;
 
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+        }),
+      },
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error("Gemini error:", data);
+      return res.status(500).json({ error: "AI error", details: data });
+    }
+
+    const answer = data.candidates[0].content.parts[0].text;
     res.json({ answer });
   } catch (err) {
     console.error(err);
