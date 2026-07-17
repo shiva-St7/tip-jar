@@ -4,6 +4,7 @@ import axios from "axios";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Terms from "./pages/Terms";
 import Refund from "./pages/Refund";
+import ChatBot from "./pages/ChatBot";
 
 const styles = {
   page: {
@@ -304,6 +305,7 @@ function TipJar() {
           © 2026 Tip Jar · Contact: shivamtiwaricr7@gmail.com
         </p>
       </div>
+      <ChatBot />
     </div>
   );
 }

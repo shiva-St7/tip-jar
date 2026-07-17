@@ -3,6 +3,10 @@ const Razorpay = require("razorpay");
 const crypto = require("crypto");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
+
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const knowledge = require("./knowledge");
+
 require("dotenv").config();
 
 const app = express();
@@ -67,6 +71,43 @@ app.post("/verify-payment", (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: "Verification failed" });
+  }
+});
+
+// RAG Chatbot route
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+app.post("/chat", async (req, res) => {
+  try {
+    const { question } = req.body;
+
+    if (!question || question.trim() === "") {
+      return res.status(400).json({ error: "Question is required" });
+    }
+
+    // This is the RAG part — we inject our knowledge into the prompt
+    const prompt = `
+You are a helpful assistant for Tip Jar, a creator tipping platform.
+Answer the user's question based ONLY on the information provided below.
+If the answer is not in the provided information, say "I don't have that information, please contact shivamtiwaricr7@gmail.com"
+Keep answers friendly, short and helpful.
+
+KNOWLEDGE BASE:
+${knowledge}
+
+USER QUESTION: ${question}
+
+ANSWER:
+    `;
+
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const result = await model.generateContent(prompt);
+    const answer = result.response.text();
+
+    res.json({ answer });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Something went wrong with the AI" });
   }
 });
 
