@@ -86,20 +86,16 @@ app.post("/chat", async (req, res) => {
     }
 
     const prompt = `
-You are a helpful assistant for Tip Jar, a creator tipping platform.
-Answer the user's question based ONLY on the information provided below.
-If the answer is not in the provided information, say "I don't have that information, please contact shivam@email.com"
-Keep answers friendly, short and helpful.
+You are a helpful assistant for Tip Jar.
+Answer ONLY based on this knowledge base:
 
-KNOWLEDGE BASE:
 ${knowledge}
 
 USER QUESTION: ${question}
-
 ANSWER:
     `;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const result = await model.generateContent(prompt);
     const answer = result.response.text();
 
