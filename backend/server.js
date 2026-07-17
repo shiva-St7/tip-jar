@@ -85,11 +85,10 @@ app.post("/chat", async (req, res) => {
       return res.status(400).json({ error: "Question is required" });
     }
 
-    // This is the RAG part — we inject our knowledge into the prompt
     const prompt = `
 You are a helpful assistant for Tip Jar, a creator tipping platform.
 Answer the user's question based ONLY on the information provided below.
-If the answer is not in the provided information, say "I don't have that information, please contact shivamtiwaricr7@gmail.com"
+If the answer is not in the provided information, say "I don't have that information, please contact shivam@email.com"
 Keep answers friendly, short and helpful.
 
 KNOWLEDGE BASE:
@@ -100,9 +99,7 @@ USER QUESTION: ${question}
 ANSWER:
     `;
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash-latest",
-    });
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
     const result = await model.generateContent(prompt);
     const answer = result.response.text();
 
@@ -112,5 +109,4 @@ ANSWER:
     res.status(500).json({ error: "Something went wrong with the AI" });
   }
 });
-
 app.listen(5000, () => console.log("✅ Backend running on port 5000"));
