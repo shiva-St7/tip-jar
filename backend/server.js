@@ -5,7 +5,7 @@ const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 
 // const { GoogleGenerativeAI } = require("@google/generative-ai");
-// const knowledge = require("./knowledge");
+const knowledge = require("./knowledge");
 
 require("dotenv").config();
 
